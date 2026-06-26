@@ -328,60 +328,42 @@
 </div>
 
 <script>
-// ========== DATA ==========
+// ========== DATA (ตรงกับ original channel-list ทุก go: key) ==========
 const categories = {
   "ภาพยนต์": [
-    { name:"HBO",              src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",  url:"go:K" },
-    { name:"HBO(SV1)",         src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",  url:"go:N" },
-    { name:"HBO-Hit",          src:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/HBO_logo.svg/640px-HBO_logo.svg.png", url:"go:K2" },
-    { name:"HBO Family",       src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",  url:"go:K3" },
-    { name:"Cinemax(SV1)",     src:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Cinemax-Logo.svg/640px-Cinemax-Logo.svg.png", url:"go:T" },
-    { name:"AXN(SV2)",         src:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/AXN_logo.svg/640px-AXN_logo.svg.png", url:"go:T2" },
-    { name:"Warner TV",        src:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Warner_TV_Asia_Logo.svg/640px-Warner_TV_Asia_Logo.svg.png", url:"go:C2" },
-    { name:"Asian Hits",       src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:F" },
-    { name:"HITS Movies",      src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:G" },
-    { name:"HITS Now",         src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:H" },
-    { name:"Mono29Plus",       src:"https://www.adobomagazine.com/wp-content/uploads/2015/09/asd.jpg", url:"go:AA" },
-    { name:"Mono Music",       src:"https://www.adobomagazine.com/wp-content/uploads/2015/09/asd.jpg", url:"go:MM" },
-    { name:"Rock Extreme",     src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:MM2" },
-    { name:"True Film1HD",     src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:FF" },
-    { name:"True Film2HD",     src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:FF2" },
-    { name:"True Film Asia",   src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:FF3" },
-    { name:"True Thai Film",   src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:FF4" },
-    { name:"True Movies Hits", src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:FF5" },
-    { name:"True Asian More",  src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:FF6" },
-    { name:"True Series",      src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:FF7" },
-    { name:"CCM",              src:"https://static.wikia.nocookie.net/logopedia/images/b/b8/CCM_new_Logo.png", url:"go:T" },
-    { name:"Crime Inv.",       src:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Crime_%2B_Investigation_logo.svg/640px-Crime_%2B_Investigation_logo.svg.png", url:"go:C3" },
-    { name:"TrueX-Zyte",      src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:ZX" },
-    { name:"RUSH",             src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:ZX2" },
-    { name:"Alure Channel",    src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:ZX3" },
+    { name:"HBO",            src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",                                                                         url:"go:K"  },
+    { name:"HBO(SV1)",       src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",                                                                         url:"go:N"  },
+    { name:"CCM",            src:"https://static.wikia.nocookie.net/logopedia/images/b/b8/CCM_new_Logo.png",                                                               url:"go:T"  },
+    { name:"History",        src:"https://nhd.org/wp-content/uploads/2022/11/Copy-of-Copy-of-39673730_History_Logo_2015_RGB_Black_type-1.png",                             url:"go:C"  },
+    { name:"CCTV",           src:"https://p2.img.cctvpic.com/photoAlbum/page/performance/img/2022/3/21/1647846719088_381.png",                                             url:"go:D"  },
+    { name:"CT Sport HD",    src:"https://logowik.com/content/uploads/images/ct-sport-hd6421.logowik.com.webp",                                                            url:"go:E"  },
+    { name:"CH F",           src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg",                   url:"go:F"  },
+    { name:"CH G",           src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg",                   url:"go:G"  },
+    { name:"CH H",           src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg",                   url:"go:H"  },
+    { name:"CH MM",          src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg",                   url:"go:MM" },
+    { name:"Mono29Plus",     src:"https://www.adobomagazine.com/wp-content/uploads/2015/09/asd.jpg",                                                                       url:"go:AA" },
+    { name:"XTRA",           src:"https://static.wikia.nocookie.net/logopedia/images/b/b5/XTRA_2.png",                                                                     url:"go:i"  },
   ],
   "กีฬาต่างประเทศ": [
-    { name:"beIN Sports 1",   src:"https://ball67.com/assets/channels-logo/bein1.png",      url:"go:M" },
-    { name:"beIN Sports 2",   src:"https://ball67.com/assets/channels-logo/bein2.png",      url:"go:O" },
-    { name:"beIN Sports 3",   src:"https://ball67.com/assets/channels-logo/bein3.png",      url:"go:P" },
-    { name:"True Sport 1",    src:"https://ball67.com/assets/channels-logo/truesport1.png", url:"go:Q" },
-    { name:"True Sport 2",    src:"https://ball67.com/assets/channels-logo/truesport2.png", url:"go:R" },
-    { name:"True Sport 3",    src:"https://ball67.com/assets/channels-logo/truesport3.png", url:"go:FF" },
-    { name:"One Championship",src:"https://bestcommt2.github.io/logo/sport/one%20championship.jpg", url:"go:Z" },
-    { name:"HIFIGHT",         src:"https://raw.githubusercontent.com/zaxacaasada/logotv/refs/heads/main/HIFIGHT.png", url:"go:X" },
-    { name:"Golf Channel",    src:"https://ball67.com/assets/channels-logo/golfchannel.png",  url:"go:J" },
-    { name:"HD Golf 2",       src:"https://api.eatmorebanana.org/images/png/hd-golf2.png",   url:"go:V" },
-    { name:"CT Sport HD",     src:"https://logowik.com/content/uploads/images/ct-sport-hd6421.logowik.com.webp", url:"go:E" },
-    { name:"XTRA",            src:"https://static.wikia.nocookie.net/logopedia/images/b/b5/XTRA_2.png", url:"go:i" },
-    { name:"Sport TV 1",      src:"https://cms.dmpcdn.com/livetv/2023/07/24/61050450-29cc-11ee-b2f4-e9de482d866e_webp_original.webp", url:"go:ZZ" },
-    { name:"Sport TV 2",      src:"https://cms.dmpcdn.com/livetv/2023/07/24/60cba4d0-29cc-11ee-b2f4-e9de482d866e_webp_original.webp", url:"go:ZX" },
-    { name:"Monomax Sport",   src:"https://ball67.com/assets/channels-logo/monomax-sport-tv.png", url:"go:L" },
-    { name:"CCTV",            src:"https://p2.img.cctvpic.com/photoAlbum/page/performance/img/2022/3/21/1647846719088_381.png", url:"go:D" },
-    { name:"Ball HD",         src:"https://f.ptcdn.info/909/090/000/mnflwx0co3kNQynawl0-o.jpg", url:"go:XX" },
-    { name:"History",         src:"https://nhd.org/wp-content/uploads/2022/11/Copy-of-Copy-of-39673730_History_Logo_2015_RGB_Black_type-1.png", url:"go:C" },
+    { name:"Golf Channel",   src:"https://ball67.com/assets/channels-logo/golfchannel.png",                                                                                url:"go:J"  },
+    { name:"HD Golf 2",      src:"https://api.eatmorebanana.org/images/png/hd-golf2.png",                                                                                  url:"go:V"  },
+    { name:"Monomax Sport",  src:"https://ball67.com/assets/channels-logo/monomax-sport-tv.png",                                                                           url:"go:L"  },
+    { name:"beIN Sports 1",  src:"https://ball67.com/assets/channels-logo/bein1.png",                                                                                      url:"go:M"  },
+    { name:"beIN Sports 2",  src:"https://ball67.com/assets/channels-logo/bein2.png",                                                                                      url:"go:O"  },
+    { name:"beIN Sports 3",  src:"https://ball67.com/assets/channels-logo/bein3.png",                                                                                      url:"go:P"  },
+    { name:"True Sport 1",   src:"https://ball67.com/assets/channels-logo/truesport1.png",                                                                                 url:"go:Q"  },
+    { name:"True Sport 2",   src:"https://ball67.com/assets/channels-logo/truesport2.png",                                                                                 url:"go:R"  },
+    { name:"True Sport 3",   src:"https://ball67.com/assets/channels-logo/truesport3.png",                                                                                 url:"go:FF" },
+    { name:"One Championship",src:"https://bestcommt2.github.io/logo/sport/one%20championship.jpg",                                                                        url:"go:Z"  },
+    { name:"HIFIGHT",        src:"https://raw.githubusercontent.com/zaxacaasada/logotv/refs/heads/main/HIFIGHT.png",                                                       url:"go:X"  },
+    { name:"Sport TV 1",     src:"https://cms.dmpcdn.com/livetv/2023/07/24/61050450-29cc-11ee-b2f4-e9de482d866e_webp_original.webp",                                       url:"go:ZZ" },
+    { name:"Sport TV 2",     src:"https://cms.dmpcdn.com/livetv/2023/07/24/60cba4d0-29cc-11ee-b2f4-e9de482d866e_webp_original.webp",                                       url:"go:ZX" },
+    { name:"Ball HD",        src:"https://f.ptcdn.info/909/090/000/mnflwx0co3kNQynawl0-o.jpg",                                                                             url:"go:XX" },
   ],
   "สารคดี": [
-    { name:"History",         src:"https://nhd.org/wp-content/uploads/2022/11/Copy-of-Copy-of-39673730_History_Logo_2015_RGB_Black_type-1.png", url:"go:C" },
-    { name:"CCTV",            src:"https://p2.img.cctvpic.com/photoAlbum/page/performance/img/2022/3/21/1647846719088_381.png", url:"go:D" },
-    { name:"Crime Inv.",      src:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Crime_%2B_Investigation_logo.svg/640px-Crime_%2B_Investigation_logo.svg.png", url:"go:C3" },
-    { name:"CCM",             src:"https://static.wikia.nocookie.net/logopedia/images/b/b8/CCM_new_Logo.png", url:"go:T" },
+    { name:"History",        src:"https://nhd.org/wp-content/uploads/2022/11/Copy-of-Copy-of-39673730_History_Logo_2015_RGB_Black_type-1.png",                             url:"go:C"  },
+    { name:"CCTV",           src:"https://p2.img.cctvpic.com/photoAlbum/page/performance/img/2022/3/21/1647846719088_381.png",                                             url:"go:D"  },
+    { name:"CCM",            src:"https://static.wikia.nocookie.net/logopedia/images/b/b8/CCM_new_Logo.png",                                                               url:"go:T"  },
   ],
   "การ์ตูน": [],
   "ดิจิตอลทีวี": [],
@@ -390,7 +372,7 @@ const categories = {
   "ดูกีฬาย้อนหลัง": [],
   "18+": [],
   "Test": [
-    { name:"Test Channel", src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg", url:"go:ZX3" }
+    { name:"Test Channel",   src:"https://raw.githubusercontent.com/Nebiela/live-new2/refs/heads/live-new2/movie%20film%20cinema%20poster%20banner.jpg",                   url:"go:ZX3" }
   ]
 };
 
@@ -422,11 +404,15 @@ function renderGrid(channels) {
     const card = document.createElement('a');
     card.className = 'ch-card';
     card.tabIndex = 0;
+    card.href = ch.url;           // ← ตั้งค่า href ตรงๆ เหมือน <a href="go:K">
     card.dataset.index = i;
     card.dataset.url = ch.url;
     card.dataset.name = ch.name;
-    card.innerHTML = `<img src="${ch.src}" alt="${ch.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2256%22><rect width=%2280%22 height=%2256%22 fill=%22%23222%22/><text x=%2240%22 y=%2232%22 fill=%22%23555%22 text-anchor=%22middle%22 font-size=%2211%22>No Logo</text></svg>'"><div class="ch-label">${ch.name}</div>`;
-    card.addEventListener('click', () => playChannel(ch, card));
+    card.innerHTML = `<img src="${ch.src}" alt="${ch.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2256%22><rect width=%2280%22 height=%2256%22 fill=%22%23222%22></rect><text x=%2240%22 y=%2232%22 fill=%22%23555%22 text-anchor=%22middle%22 font-size=%2211%22>No Logo</text></svg>'"><div class="ch-label">${ch.name}</div>`;
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      playChannel(ch, card);
+    });
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playChannel(ch, card); }
     });
@@ -448,12 +434,12 @@ function playChannel(ch, card) {
   playingUrl = ch.url;
   document.querySelectorAll('.ch-card').forEach(c => c.classList.remove('playing'));
   card.classList.add('playing');
-  nowPlaying.textContent = '▶ ' + ch.name;
-  overlay.style.display = 'none';
-  // Real URL would go here; show overlay with channel name
+  // อัปเดต overlay แสดงชื่อช่อง
   overlay.style.display = 'flex';
   overlay.querySelector('.play-icon').textContent = '▶';
   overlay.querySelector('.ch-name').textContent = '▶ ' + ch.name;
+  // ส่งคำสั่ง go: ไปยัง Android TV app (เหมือน <a href="go:K"> คลิก)
+  window.location.href = ch.url;
 }
 
 // ========== SEARCH ==========
@@ -522,7 +508,7 @@ setCategory("ภาพยนต์");
 /* ==========================
    ข้อมูลต้นฉบับ
 ========================== */
-const PORTAL_URL = "https://iptvandroidtv.iveenvon.workers.dev/";
+const PORTAL_URL = "https://imanpost.github.io/AndroidTV/";
 const MAC_ADDRESS = "00:11:22:33:44:55";
 
 /* ==========================
