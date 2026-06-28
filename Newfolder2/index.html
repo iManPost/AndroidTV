@@ -172,6 +172,15 @@
     padding-left: 8px;
   }
 
+  /* Right panel (desktop/portrait) */
+  .right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+  }
+
   /* Channel grid */
   #channel-grid-wrapper {
     flex: 1;
@@ -246,6 +255,140 @@
     flex-shrink: 0;
   }
   #hint-bar span b { color: var(--accent); font-weight: 600; }
+
+  /* ===== MOBILE LANDSCAPE ===== */
+  @media screen and (max-height: 500px) and (orientation: landscape) {
+    body {
+      flex-direction: column;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    /* Sidebar → horizontal tab bar at top */
+    #sidebar {
+      width: 100%;
+      min-width: 0;
+      height: auto;
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-right: none;
+      border-bottom: 2px solid #222;
+      flex-shrink: 0;
+      scrollbar-width: none;
+    }
+    #sidebar::-webkit-scrollbar { display: none; }
+
+    #sidebar-header {
+      display: none;
+    }
+
+    .menu-item {
+      flex-direction: row;
+      padding: 8px 14px;
+      white-space: nowrap;
+      border-left: none;
+      border-bottom: 3px solid transparent;
+      font-size: 0.78rem;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .menu-item:hover, .menu-item:focus {
+      border-left-color: transparent;
+      border-bottom-color: var(--accent);
+    }
+    .menu-item.active {
+      border-left-color: transparent;
+      border-bottom-color: var(--accent);
+    }
+    .menu-item .icon { font-size: 0.9rem; }
+
+    #main {
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    #topbar {
+      padding: 5px 10px;
+      font-size: 0.72rem;
+    }
+    #search-box {
+      width: 130px;
+      padding: 4px 8px;
+      font-size: 0.72rem;
+    }
+
+    /* Content area: player left, grid right */
+    #content-area {
+      flex-direction: row;
+      padding: 8px 8px 0;
+      gap: 10px;
+      overflow: hidden;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Player takes fixed left portion */
+    #mini-player {
+      width: 38%;
+      max-width: none;
+      margin: 0;
+      flex-shrink: 0;
+      aspect-ratio: 16/9;
+      align-self: flex-start;
+    }
+
+    /* Right side: title + grid */
+    .right-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .cat-title {
+      font-size: 0.7rem;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    #channel-grid-wrapper {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+    }
+
+    .channel-grid {
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 8px;
+    }
+
+    .ch-card {
+      padding: 7px 4px 6px;
+      border-radius: 8px;
+    }
+    .ch-card img {
+      width: 60px;
+      height: 42px;
+    }
+    .ch-card .ch-label {
+      font-size: 0.6rem;
+    }
+
+    /* Touch tap feedback */
+    .ch-card:active {
+      transform: scale(0.95);
+      border-color: var(--accent);
+    }
+
+    /* Hide hint bar on small landscape to save space */
+    #hint-bar {
+      display: none;
+    }
+  }
 </style>
 </head>
 <body>
@@ -309,12 +452,15 @@
       </div>
     </div>
 
-    <!-- Category Label -->
-    <div class="cat-title" id="cat-title">ภาพยนต์</div>
+    <!-- Right panel: category + grid -->
+    <div class="right-panel">
+      <!-- Category Label -->
+      <div class="cat-title" id="cat-title">ภาพยนต์</div>
 
-    <!-- Channel Grid -->
-    <div id="channel-grid-wrapper">
-      <div class="channel-grid" id="channel-grid"></div>
+      <!-- Channel Grid -->
+      <div id="channel-grid-wrapper">
+        <div class="channel-grid" id="channel-grid"></div>
+      </div>
     </div>
   </div>
 
@@ -374,8 +520,6 @@ const categories = {
     { name:"มวยปล่ำ",        src:"https://upload.wikimedia.org/wikipedia/commons/0/02/TNA_Impact%21_2024.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",                                                                             url:"go:TNA" },
     { name:"Golf Channel",   src:"https://ball67.com/assets/channels-logo/golfchannel.png",                                                                                url:"go:J"  },
     { name:"HD Golf 2",      src:"https://api.eatmorebanana.org/images/png/hd-golf2.png",                                                                                  url:"go:V"  },
-    { name:"F1 Drive",      src:"https://a.jsrdn.com/hls/22626/drive-plus-speed/thumbh_20260324_012750_270.png",                                                            url:"go:F1DS"  },
-     { name:"Redbull",      src:"https://logodix.com/logo/1353071.jpg",                                                                                               url:"go:Red"  },
    
   
   ],
@@ -397,8 +541,7 @@ const categories = {
   
   ],
   "ดิจิตอลทีวี": [
-      { name:"ช่อง3",        src:"https://www.imgx02.xyz/assets/img/ch_logo/hd-ch3.png",                                                                                    url:"go:CH3"  },
-    { name:"CH3",         src:"https://upload.wikimedia.org/wikipedia/commons/d/d3/Ch3HDLogo.png",                                                                                url:"go:C1"  },            
+      { name:"ช่อง3",        src:"https://www.imgx02.xyz/assets/img/ch_logo/hd-ch3.png",                                                                                    url:"go:C1"  },
     { name:"ช่อง5",           src:"https://www.imgx02.xyz/assets/img/ch_logo/hd-ch5.png",                                                                                 url:"go:C2"  },
     { name:"ช่อง7",            src:"https://www.imgx01.xyz/assets/img/ch_logo/hd-ch7.png",                                                                                 url:"go:C3"  },            
     { name:"ไทยรัฐ",            src:"https://www.imgx02.xyz/assets/img/ch_logo/hd-thairath.png",                                                                            url:"go:C4"  },         
@@ -409,6 +552,7 @@ const categories = {
     { name:"Mono29-2",         src:"https://www.imgx01.xyz/assets/img/ch_logo/hd-mono.png",                                                                                            url:"go:C9"  },            
     { name:"Gmm25",         src:"https://www.imgx02.xyz/assets/img/ch_logo/sd-gmmchannel.png",                                                                                            url:"go:C10"  },            
      { name:"TRUE4U",         src:"https://www.imgx02.xyz/assets/img/ch_logo/sd-24u.png",                                                                                            url:"go:C11"  },            
+      { name:"CH3",         src:"https://www.imgx02.xyz/assets/img/ch_logo/hd-ch3.png",                                                                                            url:"go:CH3"  },            
       { name:"ThaiPBS",         src:"https://www.spu.ac.th/fac/commarts/wp-content/uploads/sites/3/2023/09/357069550_667525968756496_8939523617697533370_n.jpg",                     url:"go:PBS"  },            
   
   ],
@@ -424,14 +568,7 @@ const categories = {
     { name:"SportAP",  src:"https://www.sportplay.co.uk/wp-content/uploads/2021/08/schema-logo-sportplay-1.png",                                                                           url:"go:E4"  },
     { name:"รถแข่ง",   src:"https://i.postimg.cc/pL7dtZvb/IMG-2177.png",                                                                                           url:"go:E6"  },
      { name:"MAX1TH",   src:"https://ball67.com/assets/channels-logo/monomax-sport-tv.png",                                                                                url:"go:AMM"  },
-     { name:"TrueSP7",   src:"https://www.imgx01.xyz/assets/img/ch_logo/TrueSport7.jpg",                                                                                 url:"go:TSP" },
-     { name:"beIN1",  src:"https://ball67.com/assets/channels-logo/bein1.png",                                                                                      url:"go:M"  },
-    { name:"beIN2",  src:"https://ball67.com/assets/channels-logo/bein2.png",                                                                                      url:"go:O"  },
-    { name:"beIN3",  src:"https://ball67.com/assets/channels-logo/bein3.png",                                                                                      url:"go:P"  },
-     { name:"beIN4",  src:"https://static.wixstatic.com/media/47bf3e_22458812d52144c99d89beffc27944ea~mv2.png",                                                                                      url:"go:bein4"  },
-    { name:"beIN5",  src:"https://static.wixstatic.com/media/47bf3e_22458812d52144c99d89beffc27944ea~mv2.png",                                                                                      url:"go:bein5"  },
-    { name:"beIN6",  src:"https://static.wixstatic.com/media/47bf3e_22458812d52144c99d89beffc27944ea~mv2.png",                                                                                      url:"go:bein6"  },
-   
+ 
   ],
   "NEWS": [
     { name:"BBC News",        src:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/BBC_World_News_2022.svg/960px-BBC_World_News_2022.svg.png?_=20220425110846",                     url:"go:D1"  },
