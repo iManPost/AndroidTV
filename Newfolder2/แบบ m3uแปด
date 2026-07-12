@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>PTV</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="/clap.css">
+<script src="//cdn.jsdelivr.net/npm/@clappr/player@0.4.0/dist/clappr.min.js"></script>
+</head>
+<body>
+<div id="player"></div>
+
+<script>
+var player = new Clappr.Player({
+    source: 'https://เพิ่มลิงกตรงนี้.m3u8',
+    mimeType: 'application/x-mpegURL',
+    autoPlay: true,
+    height: '100%',
+    width: '100%',
+    parentId: "#player",
+    playback: {
+        preload: 'auto'
+    }
+});
+</script>
+
+<span style='position:absolute;bottom:10px;right:20px;font-size:15px;font-weight:bold;color:#ff0;'><em>MI เทส ™</em></span>
+<center>
+<p><ins>test🇹🇭</ins></p>
+<img src="https://drive.google.com/uc?export=download&id=17X-Yfsk577ML0CjS88rUDIqaWwOdzzYQ" alt="M Logo" style="width:120px; margin-top:10px;">
+</center>
+</body>
+</html>
