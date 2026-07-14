@@ -29,6 +29,16 @@
     overflow: hidden;
   }
 
+  #playerView {
+    display: none;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  #playerView.active { display: flex; }
+  #homeScreen.hidden { display: none; }
+
   /* ===== SIDEBAR ===== */
   #sidebar {
     width: var(--sidebar-w);
@@ -46,12 +56,17 @@
     padding: 14px 16px 10px;
     border-bottom: 1px solid #222;
   }
+  .gradient-logo {
+    background: linear-gradient(90deg, #ff2ea6 0%, #7b5cff 50%, #2ec4ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
   #sidebar-header .logo {
     font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--accent);
+    font-weight: 800;
     letter-spacing: 1px;
-    text-shadow: 0 0 10px var(--accent);
   }
   #sidebar-header .sub {
     font-size: 0.68rem;
@@ -107,22 +122,18 @@
   }
   #topbar .breadcrumb { color: var(--accent); font-weight: 600; }
   #topbar .sep { opacity: 0.3; }
-  #search-box {
+  #topbarClock {
     margin-left: auto;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 6px;
-    padding: 5px 12px;
-    color: var(--text);
-    font-size: 0.8rem;
-    outline: none;
-    width: 180px;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    white-space: nowrap;
   }
-  #search-box:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 8px #00d4ff44;
-  }
+  #topbarClock .sep { opacity: 0.35; }
+  #topbarGreet { color: var(--accent); font-weight: 600; }
+  #topbarTime { color: var(--text); font-weight: 700; letter-spacing: 0.5px; }
 
   /* Video + content area */
   #content-area {
@@ -131,33 +142,6 @@
     flex-direction: column;
     overflow: hidden;
     padding: 14px 16px 0;
-  }
-
-  /* Mini player */
-  #mini-player {
-    width: 100%;
-    max-width: 240px;
-    margin: 0 auto 14px;
-    aspect-ratio: 16/9;
-    background: #000;
-    border: 2px solid var(--accent);
-    box-shadow: 0 0 24px #FF3131;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    flex-shrink: 0;
-  }
-  #mini-player video { width: 100%; height: 100%; display: block; }
-  #player-overlay {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.6);
-    flex-direction: column; gap: 6px;
-  }
-  #player-overlay .play-icon { font-size: 2.5rem; opacity: 0.5; }
-  #player-overlay .ch-name {
-    font-size: 0.85rem; color: var(--accent); opacity: 0.8;
-    text-shadow: 0 0 8px var(--accent);
   }
 
   /* Category title */
@@ -239,6 +223,283 @@
   }
   .ch-card.playing .ch-label { color: var(--accent2); }
 
+  /* ================================================================
+     HOME SCREEN - หน้าแรกแบบไอคอนหมวดหมู่ (แสดงก่อนเข้าหน้าเล่นช่อง)
+     ================================================================ */
+  #homeScreen {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  /* ===== HOME SIDEBAR (สไตล์อ้างอิงจากภาพ "Extreme InfiniTV") ===== */
+  #homeSidebar {
+    width: 240px;
+    min-width: 240px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+    padding-bottom: 10px;
+  }
+  .hs-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 16px 14px;
+    border-bottom: 1px solid #222;
+    flex-shrink: 0;
+  }
+  .hs-logo__mark { font-size: 1.4rem; }
+  .hs-logo .logo { font-size: 1.05rem; font-weight: 800; letter-spacing: 0.5px; }
+  .hs-logo .sub { font-size: 0.65rem; color: var(--text-dim); margin-top: 2px; }
+
+  .hs-search {
+    margin: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 8px 10px;
+    flex-shrink: 0;
+  }
+  .hs-search__icon { font-size: 0.8rem; opacity: 0.6; }
+  #homeSearchBox {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 0.82rem;
+    width: 100%;
+    font-family: inherit;
+  }
+
+  .hs-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0;
+  }
+  .hs-nav--more { border-top: 1px solid #222; margin-top: 8px; padding-top: 10px; }
+  .hs-nav__title {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 16px 8px;
+  }
+  .hs-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    color: var(--text);
+    font-size: 0.86rem;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .hs-item .icon { font-size: 1rem; opacity: 0.8; flex-shrink: 0; }
+  .hs-item:hover, .hs-item:focus {
+    background: #1e1e1e;
+    border-left-color: var(--accent);
+    color: var(--accent);
+  }
+  .hs-item.active {
+    background: #1a2a2a;
+    border-left-color: #ff2ea6;
+    color: #ff2ea6;
+    font-weight: 600;
+  }
+
+  /* ===== HOME MAIN (แดชบอร์ด) ===== */
+  .hs-main {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+    padding: 20px 24px 30px;
+    background: radial-gradient(ellipse at top, #141824 0%, var(--bg) 55%);
+  }
+
+  .hs-hero {
+    position: relative;
+    border-radius: 16px;
+    padding: 26px 26px 22px;
+    background: linear-gradient(135deg, #142028 0%, #0d1216 100%);
+    border: 1px solid #223;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s, transform 0.15s;
+    margin-bottom: 18px;
+  }
+  .hs-hero:hover, .hs-hero:focus {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .hs-hero__greet {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .hs-hero__icon { font-size: 2.4rem; margin: 14px 0 6px; opacity: 0.85; }
+  .hs-hero__title { font-size: 2.2rem; font-weight: 800; line-height: 1; }
+  .hs-hero__sub { margin-top: 8px; font-size: 0.82rem; color: var(--text-dim); }
+
+  .hs-quick {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .hs-quickcard {
+    border-radius: 14px;
+    padding: 18px 18px 16px;
+    background: #14171f;
+    border: 1px solid #222;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .hs-quickcard:hover, .hs-quickcard:focus {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .hs-quickcard__icon { font-size: 1.4rem; margin-bottom: 8px; }
+  .hs-quickcard__title { font-size: 1.15rem; font-weight: 800; }
+  .hs-quickcard__desc { margin-top: 4px; font-size: 0.76rem; color: var(--text-dim); }
+
+  .hs-section-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .hs-section-title__more { font-size: 0.72rem; color: var(--text-dim); font-weight: 400; }
+
+  /* ช่องค้นหา (สำรอง ไม่ได้ใช้แล้วในสไตล์ใหม่ แต่คง element ไว้กันสคริปต์พัง) */
+  .home-search-wrap { display: none; }
+
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .home-card {
+    position: relative;
+    width: 100%;
+    height: 0;
+    /* padding-top แทน aspect-ratio: กันปัญหาการ์ดยุบซ้อนทับกันบนกล่องแอนดรอย/เบราว์เซอร์รุ่นเก่าที่ไม่รองรับ aspect-ratio */
+    padding-top: 75%;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1.5px solid #2a2a2a;
+    background: var(--card-bg, #1a1a1a);
+    outline: none;
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  }
+  .home-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, var(--card-glow, rgba(255,255,255,0.12)) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .home-card:hover,
+  .home-card:focus,
+  .home-card:active {
+    transform: translateY(-3px) scale(1.02);
+    border-color: var(--card-accent, var(--accent));
+    box-shadow: 0 8px 22px -6px var(--card-glow, rgba(0,0,0,0.5));
+  }
+  .home-card__body {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .home-card__icon {
+    font-size: 38px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  }
+  .home-card__label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px 8px 9px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--card-accent, #fff);
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.75) 100%);
+    text-shadow: 0 0 12px var(--card-glow, transparent);
+    z-index: 2;
+  }
+  /* สีประจำแต่ละหมวด */
+  .home-card--c1  { --card-accent:#ff5470; --card-glow:rgba(255,84,112,0.35); --card-bg:linear-gradient(150deg,#2a1420,#14171f); }
+  .home-card--c2  { --card-accent:#ffb84d; --card-glow:rgba(255,184,77,0.3);  --card-bg:linear-gradient(150deg,#241a10,#14171f); }
+  .home-card--c3  { --card-accent:#ffb84d; --card-glow:rgba(255,184,77,0.3);  --card-bg:linear-gradient(150deg,#241a10,#14171f); }
+  .home-card--c4  { --card-accent:#ffb84d; --card-glow:rgba(255,184,77,0.3);  --card-bg:linear-gradient(150deg,#241a10,#14171f); }
+  .home-card--c5  { --card-accent:#ffb84d; --card-glow:rgba(255,184,77,0.3);  --card-bg:linear-gradient(150deg,#241a10,#14171f); }
+  .home-card--c6  { --card-accent:#3fd0ff; --card-glow:rgba(63,208,255,0.35); --card-bg:linear-gradient(150deg,#0e2430,#0d0e12); }
+  .home-card--c7  { --card-accent:#ff5470; --card-glow:rgba(255,84,112,0.3); --card-bg:linear-gradient(150deg,#2a1420,#1a1a1a); }
+  .home-card--c8  { --card-accent:#ff5ec4; --card-glow:rgba(255,94,196,0.35); --card-bg:linear-gradient(150deg,#241127,#14171f); }
+  .home-card--c9  { --card-accent:#2ee6b8; --card-glow:rgba(46,230,184,0.3); --card-bg:linear-gradient(150deg,#0d241d,#1a1a1a); }
+  .home-card--c10 { --card-accent:#8bd9ff; --card-glow:rgba(139,217,255,0.3); --card-bg:linear-gradient(150deg,#131f26,#14171f); }
+  .home-card--c11 { --card-accent:#ffd8a8; --card-glow:rgba(255,216,168,0.3); --card-bg:linear-gradient(150deg,#221c14,#14171f); }
+  .home-card--c12 { --card-accent:#b98bff; --card-glow:rgba(185,139,255,0.3); --card-bg:linear-gradient(150deg,#1c1526,#14171f); }
+  
+  #topbarHome {
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  #topbarHome:hover { color: var(--accent); }
+
+  @media (max-width: 768px) {
+    #homeScreen { flex-direction: column; }
+    #homeSidebar {
+      width: 100%;
+      min-width: 0;
+      height: auto;
+      max-height: 42vh;
+      border-right: none;
+      border-bottom: 1px solid #222;
+    }
+    .hs-main { padding: 16px 14px 24px; }
+    .hs-hero__title { font-size: 1.7rem; }
+    .hs-quick { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .home-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .home-card__icon { font-size: 30px; }
+    .home-card__label { font-size: 12px; padding: 16px 6px 7px; }
+  }
+  @media (max-width: 480px) {
+    .home-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .hs-quick { grid-template-columns: 1fr; }
+  }
+
   /* Scrollbar style */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -262,6 +523,15 @@
       flex-direction: column;
       height: 100dvh;
       overflow: hidden;
+    }
+
+    /* สำคัญ: #playerView เป็น flex แนวนอน (row) โดย default
+       ถ้าไม่สั่งให้เป็นแนวตั้ง (column) sidebar ที่ตั้ง width:100% ด้านล่าง
+       จะไปเบียดเอาพื้นที่ #main (ตารางช่อง) จนหายไปทั้งหมด — นี่คือสาเหตุของบั๊ก */
+    #playerView {
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
     }
 
     /* Sidebar → horizontal tab bar at top */
@@ -313,33 +583,21 @@
       padding: 5px 10px;
       font-size: 0.72rem;
     }
-    #search-box {
-      width: 130px;
-      padding: 4px 8px;
-      font-size: 0.72rem;
+    #topbarClock {
+      font-size: 0.68rem;
+      gap: 6px;
     }
 
-    /* Content area: player left, grid right */
+    /* Content area: grid takes the full width now that the mini player is gone */
     #content-area {
-      flex-direction: row;
+      flex-direction: column;
       padding: 8px 8px 0;
-      gap: 10px;
+      gap: 6px;
       overflow: hidden;
       flex: 1;
       min-height: 0;
     }
 
-    /* Player takes fixed left portion */
-    #mini-player {
-      width: 38%;
-      max-width: none;
-      margin: 0;
-      flex-shrink: 0;
-      aspect-ratio: 16/9;
-      align-self: flex-start;
-    }
-
-    /* Right side: title + grid */
     .right-panel {
       flex: 1;
       display: flex;
@@ -393,95 +651,223 @@
 </head>
 <body>
 
-<!-- SIDEBAR -->
-<nav id="sidebar" role="navigation" aria-label="หมวดหมู่">
-  <div id="sidebar-header">
-    <div class="logo">🍿⃢📺💃PLAYBOX</div>
-    <div class="sub">Thailand Beta.By NETI</div>
-  </div>
+<!-- ================================================================
+HOME SCREEN - หน้าแรก (สไตล์ Sidebar อ้างอิงจากภาพ "1" / Extreme InfiniTV)
+================================================================ -->
+<div id="homeScreen">
 
-  <div class="menu-item active" data-cat="ภาพยนต์" tabindex="0">
-    <span class="icon">🎬</span> ภาพยนต์
-  </div>
-  <div class="menu-item" data-cat="ดิจิตอลทีวี" tabindex="0">
-    <span class="icon">📡</span> ดิจิตอลทีวี
-  </div>
-  <div class="menu-item" data-cat="การ์ตูน" tabindex="0">
-    <span class="icon">🎨</span> การ์ตูน
-  </div>
-  <div class="menu-item" data-cat="กีฬาไทย" tabindex="0">
-    <span class="icon">🏅</span> กีฬาไทย
-  </div>
-  <div class="menu-item" data-cat="กีฬาต่างประเทศ" tabindex="0">
-    <span class="icon">🏆</span> กีฬาต่างประเทศ
-  </div>
-  <div class="menu-item" data-cat="สารคดี" tabindex="0">
-    <span class="icon">🔭</span> สารคดี
-  </div>
-  <div class="menu-item" data-cat="NEWS" tabindex="0">
-    <span class="icon">📰</span> NEWS
-  </div>
-  <div class="menu-item" data-cat="ดูหนังใหม่" tabindex="0">
-    <span class="icon">⏪</span> ดูหนังใหม่
-  </div>
-  <div class="menu-item" data-cat="บอลโลก" tabindex="0">
-    <span class="icon">⚽︎</span> บอลโลก
-  </div>
-  <div class="menu-item" data-cat="ตารางแข่งขัน" tabindex="0">
-    <span class="icon">🧩</span> ตารางแข่งขัน
-  </div>
-  <div class="menu-item" data-cat="เกี่ยวกับ" tabindex="0">
-    <span class="icon">📢</span> เกี่ยวกับเรา
-  </div>
-</nav>
-
-<!-- MAIN -->
-<div id="main">
-  <!-- Top bar -->
-  <div id="topbar">
-    <span>หน้าแรก</span>
-    <span class="sep">›</span>
-    <span class="breadcrumb" id="breadcrumb">ภาพยนต์</span>
-    <input id="search-box" type="text" placeholder="🔍 ค้นหาช่อง..." autocomplete="off">
-  </div>
-
-  <div id="content-area">
-    <!-- Mini Player -->
-    <div id="mini-player">
-      <video id="player" controls></video>
-      <div id="player-overlay">
-        <div class="play-icon">▶</div>
-        <div class="ch-name" id="now-playing">เลือกช่องเพื่อรับชม.ห้ามขาย จำหน่ายแอป @By Neti.</div>
+  <!-- Sidebar เมนูหลัก -->
+  <nav id="homeSidebar" aria-label="เมนูหลัก">
+    <div class="hs-logo">
+      <span class="hs-logo__mark">📺</span>
+      <div>
+        <div class="logo gradient-logo">PLAYBOX</div>
+        <div class="sub">Thailandฺ VIP.By NETI</div>
       </div>
     </div>
 
-    <!-- Right panel: category + grid -->
-    <div class="right-panel">
-      <!-- Category Label -->
-      <div class="cat-title" id="cat-title">ภาพยนต์</div>
+    <div class="hs-search">
+      <span class="hs-search__icon">🔍</span>
+      <input id="homeSearchBox" type="text" placeholder="ค้นหาช่อง..." autocomplete="off">
+    </div>
 
-      <!-- Channel Grid -->
-      <div id="channel-grid-wrapper">
-        <div class="channel-grid" id="channel-grid"></div>
+    <div class="hs-nav">
+      <button class="hs-item active" type="button" data-home-action="home"><span class="icon">🏠</span>Home</button>
+      <button class="hs-item" type="button" data-cat="ดูหนังใหม่"><span class="icon">🎬</span>Movies</button>
+      <button class="hs-item" type="button" data-cat="WisePlay"><span class="icon">📛</span>"WisePlay</button>
+    </div>
+
+    <div class="hs-nav hs-nav--more">
+      <div class="hs-nav__title">หมวดหมู่อื่นๆ</div>
+      <button class="hs-item" type="button" data-cat="ภาพยนต์"><span class="icon">🍿</span>ภาพยนต์</button>
+      <button class="hs-item" type="button" data-cat="การ์ตูน"><span class="icon">🎨</span>การ์ตูน</button>
+      <button class="hs-item" type="button" data-cat="กีฬาต่างประเทศ"><span class="icon">🏆</span>กีฬาต่างประเทศ</button>
+      <button class="hs-item" type="button" data-cat="บอลโลก"><span class="icon">⚽</span>บอลโลก</button>
+      <button class="hs-item" type="button" data-cat="สารคดี"><span class="icon">🔭</span>สารคดี</button>
+      <button class="hs-item" type="button" data-cat="NEWS"><span class="icon">📰</span>NEWS</button>
+      <button class="hs-item" type="button" data-cat="ตารางแข่งขัน"><span class="icon">🧩</span>ตารางแข่งขัน</button>
+      <button class="hs-item" type="button" data-cat="เกี่ยวกับ"><span class="icon">📢</span>เกี่ยวกับเรา</button>
+    </div>
+  </nav>
+
+  <!-- แดชบอร์ดหลัก -->
+  <div class="hs-main">
+    <div class="home-search-wrap" id="homeSearchWrap"></div>
+
+    <!-- Quick cards: Movies / Series -->
+    <div class="hs-quick">
+      <div class="hs-quickcard" data-cat="ดูหนังใหม่" tabindex="0">
+        <div class="hs-quickcard__icon">🎬</div>
+        <div class="hs-quickcard__title">Movies</div>
+        <div class="hs-quickcard__desc">ดูหนังใหม่อัปเดตล่าสุด</div>
+      </div>
+      <div class="hs-quickcard" data-cat="WisePlay" tabindex="0">
+        <div class="hs-quickcard__icon">📛</div>
+        <div class="hs-quickcard__title">WISEPLAY</div>
+        <div class="hs-quickcard__desc">ดูผ่านแอปวิสเพย์แบบเต็มอิ่ม</div>
       </div>
     </div>
-  </div>
 
-  <!-- Remote hint -->
-  <div id="hint-bar">
-    <span><b>↑↓←→ Remote CH</b> เลื่อน</span>
-    <span><b>OK / Enter</b> เลือกช่อง</span>
-    <span><b>Back</b> เมนู</span>
-    <span><b>🔴</b> ออก</span>
+    <!-- หมวดหมู่ทั้งหมด -->
+    <div class="hs-section-title">หมวดหมู่ทั้งหมด</div>
+    <div class="home-grid" id="homeGrid">
+      <div class="home-card home-card--c1" data-cat="ดิจิตอลทีวี" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">📺</span></div>
+        <span class="home-card__label">ดิจิตอลทีวี</span>
+      </div>
+      <div class="home-card home-card--c2" data-cat="ภาพยนต์" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">🍿</span></div>
+        <span class="home-card__label">ภาพยนต์</span>
+      </div>
+      <div class="home-card home-card--c3" data-cat="ดูหนังใหม่" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">🎬</span></div>
+        <span class="home-card__label">ดูหนังใหม่</span>
+      </div>
+      <div class="home-card home-card--c5" data-cat="กีฬาไทย" tabindex="0">
+        <div class="home-card__body">
+          <span class="home-card__icon">
+            <!-- ใช้ SVG ธงชาติแทนอิโมจิ 🇹🇭 เพราะเบราว์เซอร์ของกล่องแอนดรอยหลายรุ่นไม่รองรับอิโมจิธงชาติ -->
+            <svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg" width="28">
+              <rect width="30" height="20" fill="#ffffff"/>
+              <rect width="30" height="4" fill="#a51931"/>
+              <rect y="16" width="30" height="4" fill="#a51931"/>
+              <rect y="6.5" width="30" height="7" fill="#2d2a4a"/>
+            </svg>
+          </span>
+        </div>
+        <span class="home-card__label">กีฬาไทย</span>
+      </div>
+      <div class="home-card home-card--c6" data-cat="กีฬาต่างประเทศ" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">🌐</span></div>
+        <span class="home-card__label">กีฬาต่างประเทศ</span>
+      </div>
+      <div class="home-card home-card--c9" data-cat="บอลโลก" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">⚽</span></div>
+        <span class="home-card__label">บอลโลก</span>
+      </div>
+      <div class="home-card home-card--c8" data-cat="การ์ตูน" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">🎨</span></div>
+        <span class="home-card__label">การ์ตูน</span>
+      </div>
+      <div class="home-card home-card--c12" data-cat="สารคดี" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">🎓</span></div>
+        <span class="home-card__label">สารคดี</span>
+      </div>
+      <div class="home-card home-card--c7" data-cat="NEWS" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">📰</span></div>
+        <span class="home-card__label">NEWS</span>
+      </div>
+      <div class="home-card home-card--c10" data-cat="ตารางแข่งขัน" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">🧩</span></div>
+        <span class="home-card__label">ตารางแข่งขัน</span>
+      </div>
+      <div class="home-card home-card--c11" data-cat="เกี่ยวกับ" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">📢</span></div>
+        <span class="home-card__label">เกี่ยวกับเรา</span>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- ================================================================
+PLAYER VIEW - หน้าเล่นช่อง (ซ่อนไว้ก่อน แสดงเมื่อกดหมวดหมู่จากหน้าแรก)
+ไม่มี mini player ปลอมแล้ว - ตารางช่องใช้พื้นที่เต็มความกว้าง
+================================================================ -->
+<div id="playerView">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar" role="navigation" aria-label="หมวดหมู่">
+    <div id="sidebar-header">
+      <div class="logo">⃢📺PLAYBOX</div>
+      <div class="sub">Thailand Beta.By NETI</div>
+    </div>
+    <div class="menu-item" data-home-action="home" tabindex="0">
+      <span class="icon">🏠</span> กลับหน้าแรก
+    </div>
+    <div class="menu-item active" data-cat="ภาพยนต์" tabindex="0">
+      <span class="icon">🎬</span> ภาพยนต์
+    </div>
+    <div class="menu-item" data-cat="ดิจิตอลทีวี" tabindex="0">
+      <span class="icon">📡</span> ดิจิตอลทีวี
+    </div>
+    <div class="menu-item" data-cat="การ์ตูน" tabindex="0">
+      <span class="icon">🎨</span> การ์ตูน
+    </div>
+    <div class="menu-item" data-cat="กีฬาไทย" tabindex="0">
+      <span class="icon">🏅</span> กีฬาไทย
+    </div>
+    <div class="menu-item" data-cat="กีฬาต่างประเทศ" tabindex="0">
+      <span class="icon">🏆</span> กีฬาต่างประเทศ
+    </div>
+    <div class="menu-item" data-cat="สารคดี" tabindex="0">
+      <span class="icon">🔭</span> สารคดี
+    </div>
+    <div class="menu-item" data-cat="NEWS" tabindex="0">
+      <span class="icon">📰</span> NEWS
+    </div>
+    <div class="menu-item" data-cat="ดูหนังใหม่" tabindex="0">
+      <span class="icon">⏪</span> ดูหนังใหม่
+    </div>
+    <div class="menu-item" data-cat="บอลโลก" tabindex="0">
+      <span class="icon">⚽︎</span> บอลโลก
+    </div>
+    <div class="menu-item" data-cat="ตารางแข่งขัน" tabindex="0">
+      <span class="icon">🧩</span> ตารางแข่งขัน
+    </div>
+        <div class="menu-item" data-cat="WisePlay" tabindex="0">
+      <span class="icon">📛</span> WisePlay
+    </div>
+    <div class="menu-item" data-cat="เกี่ยวกับ" tabindex="0">
+      <span class="icon">📢</span> เกี่ยวกับเรา
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div id="main">
+    <!-- Top bar -->
+    <div id="topbar">
+      <span id="topbarHome">🏠 หน้าแรก</span>
+      <span class="sep">›</span>
+      <span class="breadcrumb" id="breadcrumb">ภาพยนต์</span>
+      <div id="topbarClock">
+        <span id="topbarGreet">สวัสดี</span>
+        <span class="sep">·</span>
+        <span id="topbarTime">--:--</span>
+        <span class="sep">·</span>
+        <span id="topbarDate">-</span>
+      </div>
+    </div>
+
+    <div id="content-area">
+      <!-- Right panel: category + grid (เต็มความกว้าง ไม่มี mini player แล้ว) -->
+      <div class="right-panel">
+        <!-- Category Label -->
+        <div class="cat-title" id="cat-title">ภาพยนต์</div>
+
+        <!-- Channel Grid -->
+        <div id="channel-grid-wrapper">
+          <div class="channel-grid" id="channel-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Remote hint -->
+    <div id="hint-bar">
+      <span><b>↑↓←→ Remote CH</b> เลื่อน</span>
+      <span><b>OK / Enter</b> เลือกช่อง</span>
+      <span><b>Back</b> เมนู</span>
+      <span><b>🔴</b> ออก</span>
+    </div>
+  </div>
+
+</div><!-- /#playerView -->
 
 <script>
 // ========== DATA (ตรงกับ original channel-list ทุก go: key) ==========
 const categories = {
   "ภาพยนต์": [
     { name:"HBO",            src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",                                                                         url:"go:K"  },
-    { name:"HBO(1)",       src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",                                                                         url:"go:N"  },
+    { name:"HBO(En)",       src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",                                                                         url:"go:N"  },
     { name:"CCM",            src:"https://static.wikia.nocookie.net/logopedia/images/b/b8/CCM_new_Logo.png",                                                               url:"go:CCMth"  },
     { name:"CCTV",           src:"https://p2.img.cctvpic.com/photoAlbum/page/performance/img/2022/3/21/1647846719088_381.png",                                             url:"go:D"  },
     { name:"iPlay",          src:"https://assetsio.gnwcdn.com/450-n08w98.jpg",                                                                                              url:"go:AS" },
@@ -512,8 +898,9 @@ const categories = {
        { name:"Cool CH",       src:"https://cool-channel.com/wp-content/uploads/2022/11/Logo-Final-03-10-59.png",                                         url:"go:Yess"  },
     { name:"Asian",       src:"https://img2.pic.in.th/pic/AsianHit.png",                                         url:"go:Asian"  },
       { name:"MovAction",       src:"https://mir-s3-cdn-cf.behance.net/projects/404/17901959.548d2362b41b1.jpg",                                         url:"go:Action"  },
-      { name:"HBO TEST",            src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",                                                                         url:"go:HBOTHTES"  },
-    { name:"Test",        src:"https://www.seagull-brand.com/media/catalog/product/cache/214a85e6fb56a2c6944db5d1fe42e5bd/t/e/testp_1_1.png",                         url:"go:HIT"  },
+   
+    { name:"Test",        src:"https://www.seagull-brand.com/media/catalog/product/cache/214a85e6fb56a2c6944db5d1fe42e5bd/t/e/testp_1_1.png",                         url:"go:HIT11"  },
+
      { name:"Rock Enter",       src:"https://cdn1.clickthecity.com/wp-content/uploads/2020/07/02105729/rock-entertainment-logo-300x300.png",                                         url:"go:RockEnter"  },
         { name:"AsianMore",       src:"https://nettv.live/uploads/allimg/23/1-2312261K6260-L.jpg",                                         url:"go:AsianMore"  },
         { name:"thaiSeries",       src:"https://debbrahmaxwell.wordpress.com/wp-content/uploads/2016/11/wp-1478018543283.jpg",                                         url:"go:trueSeries"  },
@@ -609,12 +996,10 @@ const categories = {
       { name:"ThaiPBS",         src:"https://www.spu.ac.th/fac/commarts/wp-content/uploads/sites/3/2023/09/357069550_667525968756496_8939523617697533370_n.jpg",                     url:"go:PBS"  },            
       { name:"Tsport7",         src:"https://gigatv.3bbtv.co.th/wp-content/themes/changwattana/assets/channel/7.png",                                                      url:"go:TSP7"  },            
        { name:"ThaiChaiyo",         src:"https://pbs.twimg.com/profile_images/2324681141/setillzy7rfd7hua3zc2_400x400.jpeg",                                                      url:"go:Chaiyo"  },            
-   { name:"Chiangrai",         src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCpzhgamtSDKkRZxzgBZMeyDuwUozLCy0cIQ&usqp=CAU",                                                      url:"go:chiangrai"  },            
     
   ],
   "กีฬาไทย": [
- { name:"วอลเล่บอล",  src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe5vxhgNL-IWzAps4jbSZpKp-h_DuxHikQZWjAc3QR8eDSgbVVWvMyLDYb&s=10",                                                                                      url:"go:VNL11"  },
-    { name:"True1",   src:"./New folder/truesport1.png",                                                                                 url:"go:Q"  },
+ { name:"True1",   src:"./New folder/truesport1.png",                                                                                 url:"go:Q"  },
     { name:"True2",   src:"./New folder/truesport2.png",                                                                                 url:"go:R"  },
     { name:"True3",   src:"./New folder/truesport3.png",                                                                                 url:"go:FF" },
      { name:"True4",   src:"./New folder/truesport5.png",                                                                                 url:"go:E44" },
@@ -671,7 +1056,7 @@ const categories = {
       { name:"CTSport 25p",    src:"https://logowik.com/content/uploads/images/ct-sport-hd6421.logowik.com.webp",                                                      url:"go:CTSPORT25"  },
     { name:"FIFA+",    src:"https://dazngroup.com/wp-content/uploads/2025/10/Attachment-1-3.webp",                                                                                     url:"go:FIFA"  },
        { name:"Bein RU",    src:"https://f.ptcdn.info/428/087/000/m8g5ap59jmMLfEaSYzj-o.jpg",                                                                             url:"go:BES"  },
-       { name:"LiveM",    src:"https://raw.githubusercontent.com/Nebiela/ALLMOV2/refs/heads/main/%E0%B8%9B%E0%B8%81%E0%B8%8A%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88%202569/videoframe.png",                                                                             url:"go:MMC"  },
+
         { name:"FS1",    src:"https://rcrusadernews.com/wp-content/uploads/2022/06/World-Cup.png",                                                                             url:"go:FS1"  },
         { name:"FOX1",    src:"https://rcrusadernews.com/wp-content/uploads/2022/06/World-Cup.png",                                                                             url:"go:FOX"  },
         { name:"TSN",    src:"https://i.imgur.com/eRFE0jZ.png",                                                                                                              url:"go:TSNW"  },
@@ -683,11 +1068,39 @@ const categories = {
   { name:"World Cup",    src:"./New folder/cup-2026.jpg",                                                                             url:"go:WORLD"  },
   { name:"World Cup",    src:"./New folder/cup-2026.jpg",                                                                             url:"go:GAME01"  },
   { name:"World Cup",    src:"./New folder/cup-2026.jpg",                                                                             url:"go:FoX01"  },
+
+
     
   ],
   "ตารางแข่งขัน": [
  { name:"ตารางแข่งขัน",    src:"https://image-sapp-prod.bugaboo.tv/eyJidWNrZXQiOiJzdXBlcmFwcC1wcm9kLWltYWdlIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjoxMDAwLCJoZWlnaHQiOjEwMDAsImZpdCI6Imluc2lkZSJ9fSwia2V5IjoiaW1hZ2VzLzIwMjYvNi85L2ltZ18xNzgxMDEzMzc3Mzg4X3J2emRrdnZ1MC5wbmcifQ==",                                                                             url:"go:goal"  },
   ],
+    "WisePlay": [
+    { name:"beIN Sports 1",  src:"./New folder/bein1.png",                                                                                      url:"go:Bi11"  },
+    { name:"beIN Sports 2",  src:"./New folder/bein2.png",                                                                                      url:"go:Bi12"  },
+    { name:"beIN Sports 3",  src:"./New folder/bein3.png",                                                                                      url:"go:Bi13"  },
+    { name:"True Sport 1",   src:"./New folder/truesport1.png",                                                                                 url:"go:Bi14"  },
+    { name:"True Sport 2",   src:"./New folder/truesport2.png",                                                                                 url:"go:Bi15"  },
+    { name:"True Sport 3",   src:"./New folder/truesport3.png",                                                                                 url:"go:Bi16" },
+    { name:"True Sport7",   src:"./New folder/truesport7.png",                                                                                 url:"go:Bi17" },
+{ name:"Spotv1",  src:"https://cms.spotvasia.com/upload/boards/file_af7e3124-0b1d-4c14-abe2-ec98c0b8fc3e.jpg",                                  url:"go:Bi18"  },
+{ name:"Spotv2",  src:"https://cms.spotvasia.com/upload/boards/file_af7e3124-0b1d-4c14-abe2-ec98c0b8fc3e.jpg",                                   url:"go:Bi19"  },
+{ name:"HBO TH",    src:"https://assets.brandinside.asia/uploads/2016/12/hbo-logo-1.jpg",                                                                             url:"go:Bi20"  },
+{ name:"CCM",            src:"https://static.wikia.nocookie.net/logopedia/images/b/b8/CCM_new_Logo.png",                                                               url:"go:Bi21"  },
+{ name:"MoieHits",        src:"https://static.wikia.nocookie.net/russel/images/b/b9/Hits_Movies_Logo_2018.png",                                                       url:"go:Bi22"  },
+{ name:"HBOHits",        src:"https://telecomtalk.info/wp-content/uploads/2015/11/HBO-Hits-India-1200x822.png",                                                       url:"go:Bi23"  },
+{ name:"HBOFamily",        src:"https://variety.com/wp-content/uploads/2025/06/Screen-Shot-2025-06-12-at-5.57.25-PM.png",                                              url:"go:Bi24"  },
+{ name:"HBOSing",        src:"https://upload.wikimedia.org/wikipedia/commons/7/7b/Hbo_signature.png",                                                                    url:"go:Bi25"  },
+{ name:"CINEMAX",        src:"https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/112012/untitled-1_147.png",                                                 url:"go:Bi26"  },
+{ name:"Rock Enter",       src:"https://cdn1.clickthecity.com/wp-content/uploads/2020/07/02105729/rock-entertainment-logo-300x300.png",                                         url:"go:B26-1"  },  
+   { name:"Discovery ",       src:"./New folder/Discovery.png",                                                                                                     url:"go:Bi27"  },
+   { name:"AnimalShow",       src:"https://nextstep.tv/wp-content/uploads/2017/09/nextstep-anm-1.jpg",                                                          url:"go:Bi28"  },
+   { name:"MySci",       src:"https://pbs.twimg.com/ext_tw_video_thumb/1367691617029693443/pu/img/WcXUqb5iq6_N4iGn.jpg",                                          url:"go:Bi29"  },
+   { name:"Samrujlok",            src:"https://i0.wp.com/www.nextsteptv.com/wp-content/uploads/2016/07/cropped-SRL_LOGO_2016.png",                                   url:"go:Bi30"  },  
+    { name:"Test1",        src:"https://www.seagull-brand.com/media/catalog/product/cache/214a85e6fb56a2c6944db5d1fe42e5bd/t/e/testp_1_1.png",                         url:"go:Bi31"  },
+    { name:"Test2",        src:"https://www.seagull-brand.com/media/catalog/product/cache/214a85e6fb56a2c6944db5d1fe42e5bd/t/e/testp_1_1.png",                         url:"go:Bi32"  },
+      
+    ],
   
   "เกี่ยวกับ": [
     { name:"กลุ่มเฟสบุ๊ค",    src:"https://img2.imgbiz.com/imgbiz/IMG_2404.png",                                                                             url:"go:TV001"  },
@@ -697,6 +1110,7 @@ const categories = {
     
   ]
 };
+
 
 // ========== STATE ==========
 let currentCat = "ภาพยนต์";
@@ -709,10 +1123,45 @@ const menuItems = document.querySelectorAll('.menu-item');
 const grid = document.getElementById('channel-grid');
 const catTitle = document.getElementById('cat-title');
 const breadcrumb = document.getElementById('breadcrumb');
-const nowPlaying = document.getElementById('now-playing');
-const overlay = document.getElementById('player-overlay');
-const player = document.getElementById('player');
-const searchBox = document.getElementById('search-box');
+const topbarGreet = document.getElementById('topbarGreet');
+const topbarTime = document.getElementById('topbarTime');
+const topbarDate = document.getElementById('topbarDate');
+const homeScreen = document.getElementById('homeScreen');
+const playerView = document.getElementById('playerView');
+const homeCards = document.querySelectorAll('.home-card');
+const topbarHome = document.getElementById('topbarHome');
+const homeSearchBox = document.getElementById('homeSearchBox');
+const homeSidebarItems = document.querySelectorAll('#homeSidebar .hs-item');
+const heroLiveTV = document.getElementById('heroLiveTV');
+const heroGreet = document.getElementById('heroGreet');
+const quickCards = document.querySelectorAll('.hs-quickcard');
+
+// ========== HOME SCREEN <-> PLAYER VIEW ==========
+function showPlayerView() {
+  homeScreen.classList.add('hidden');
+  playerView.classList.add('active');
+}
+
+function showHome() {
+  playerView.classList.remove('active');
+  homeScreen.classList.remove('hidden');
+  homeSidebarItems.forEach(i => i.classList.toggle('active', i.dataset.homeAction === 'home'));
+  // โฟกัสเมนู Home ทันที เพื่อให้กดปุ่มเลื่อน (D-pad) รีโมทแอนดรอยใช้งานได้ทันทีที่เข้าหน้าแรก
+  const firstHomeItem = document.querySelector('#homeSidebar .hs-item');
+  if (firstHomeItem) firstHomeItem.focus();
+}
+
+// ---- คำทักทาย + เวลา บนการ์ด Hero ----
+function updateGreeting() {
+  if (!heroGreet) return;
+  const now = new Date();
+  const h = now.getHours();
+  const greet = h < 12 ? 'อรุณสวัสดิ์' : h < 18 ? 'สวัสดีตอนบ่าย' : 'สวัสดีตอนเย็น';
+  const time = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+  heroGreet.textContent = `${greet} · ${time}`;
+}
+updateGreeting();
+setInterval(updateGreeting, 30000);
 
 // ========== RENDER ==========
 function renderGrid(channels) {
@@ -756,33 +1205,96 @@ function playChannel(ch, card) {
   playingUrl = ch.url;
   document.querySelectorAll('.ch-card').forEach(c => c.classList.remove('playing'));
   card.classList.add('playing');
-  // อัปเดต overlay แสดงชื่อช่อง
-  overlay.style.display = 'flex';
-  overlay.querySelector('.play-icon').textContent = '▶';
-  overlay.querySelector('.ch-name').textContent = '▶ ' + ch.name;
   // ส่งคำสั่ง go: ไปยัง Android TV app (เหมือน <a href="go:K"> คลิก)
   window.location.href = ch.url;
 }
 
-// ========== SEARCH ==========
-searchBox.addEventListener('input', () => {
-  const q = searchBox.value.toLowerCase().trim();
-  if (!q) { renderGrid(categories[currentCat] || []); return; }
-  const all = Object.values(categories).flat();
-  renderGrid(all.filter(c => c.name.toLowerCase().includes(q)));
-  catTitle.textContent = `ค้นหา: "${searchBox.value}"`;
-  breadcrumb.textContent = 'ค้นหา';
-});
+// ========== นาฬิกา + คำทักทาย บน Topbar หน้า 2 ==========
+function updateTopbarClock() {
+  if (!topbarGreet || !topbarTime || !topbarDate) return;
+  const now = new Date();
+  const h = now.getHours();
+  const greet = h < 12 ? 'สวัสดีตอนเช้า' : h < 17 ? 'สวัสดีตอนเที่ยง' : 'สวัสดีตอนเย็น';
+  topbarGreet.textContent = greet;
+  topbarTime.textContent = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+  topbarDate.textContent = now.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+updateTopbarClock();
+setInterval(updateTopbarClock, 1000);
 
 // ========== SIDEBAR CLICK ==========
 menuItems.forEach(item => {
-  item.addEventListener('click', () => setCategory(item.dataset.cat));
+  item.addEventListener('click', () => {
+    if (item.dataset.homeAction === 'home') { showHome(); return; }
+    setCategory(item.dataset.cat);
+  });
   item.addEventListener('keydown', e => {
-    if (e.key === 'Enter') setCategory(item.dataset.cat);
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (item.dataset.homeAction === 'home') { showHome(); return; }
+      setCategory(item.dataset.cat);
+    }
     if (e.key === 'ArrowDown') { e.preventDefault(); const next = item.nextElementSibling; if (next) next.focus(); }
     if (e.key === 'ArrowUp') { e.preventDefault(); const prev = item.previousElementSibling; if (prev?.classList.contains('menu-item')) prev.focus(); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); focusFirstCard(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); if (item.dataset.homeAction !== 'home') focusFirstCard(); }
   });
+});
+
+// ========== HOME SCREEN: การ์ดหมวดหมู่ (หมวดหมู่ทั้งหมด ด้านล่าง) ==========
+homeCards.forEach(card => {
+  card.addEventListener('click', () => {
+    setCategory(card.dataset.cat);
+    showPlayerView();
+  });
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setCategory(card.dataset.cat);
+      showPlayerView();
+    }
+  });
+});
+
+// ========== HOME SIDEBAR: Home / Movies / Series / อื่นๆ ==========
+homeSidebarItems.forEach(item => {
+  item.addEventListener('click', () => {
+    if (item.dataset.homeAction === 'home') {
+      // อยู่หน้าแรกอยู่แล้ว แค่ไฮไลต์เมนู Home
+      homeSidebarItems.forEach(i => i.classList.toggle('active', i === item));
+      return;
+    }
+    setCategory(item.dataset.cat);
+    showPlayerView();
+  });
+});
+
+// ========== HOME HERO (เอาออกแล้ว - เหลือ guard ไว้กันสคริปต์พัง) + QUICK CARDS (Movies / Series) ==========
+if (heroLiveTV) {
+  const goHero = () => { setCategory(heroLiveTV.dataset.cat); showPlayerView(); };
+  heroLiveTV.addEventListener('click', goHero);
+  heroLiveTV.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goHero(); } });
+}
+quickCards.forEach(card => {
+  const go = () => { setCategory(card.dataset.cat); showPlayerView(); };
+  card.addEventListener('click', go);
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+});
+
+// ---- ค้นหาจากหน้าแรก: พาเข้าหน้าเล่นช่องพร้อมผลค้นหา ----
+homeSearchBox.addEventListener('input', () => {
+  const q = homeSearchBox.value.toLowerCase().trim();
+  if (!q) return;
+  showPlayerView();
+  const all = Object.values(categories).flat();
+  renderGrid(all.filter(c => c.name.toLowerCase().includes(q)));
+  catTitle.textContent = `ค้นหา: "${homeSearchBox.value}"`;
+  breadcrumb.textContent = 'ค้นหา';
+});
+
+// ---- ปุ่มย้อนกลับหน้าแรก (topbar) ----
+topbarHome.addEventListener('click', () => {
+  homeSearchBox.value = '';
+  showHome();
 });
 
 function focusFirstCard() {
@@ -790,14 +1302,83 @@ function focusFirstCard() {
   if (first) first.focus();
 }
 
-// ========== REMOTE / KEYBOARD NAV IN GRID ==========
+// ========== REMOTE / KEYBOARD NAV ON HOME SCREEN (หน้าแรก) ==========
+// รองรับปุ่มเลื่อน (D-pad) รีโมทแอนดรอย: ↑↓←→ ไล่ระหว่าง เมนูซ้าย → การ์ดลัด → กริดหมวดหมู่
 document.addEventListener('keydown', e => {
-  const focused = document.activeElement;
+  if (homeScreen.classList.contains('hidden')) return; // ทำงานเฉพาะตอนอยู่หน้าแรก
 
-  // Back button → go to sidebar
+  const focused = document.activeElement;
+  const sbItems = Array.from(document.querySelectorAll('#homeSidebar .hs-item'));
+  const quick = Array.from(document.querySelectorAll('.hs-quickcard'));
+  const gridCards = Array.from(document.querySelectorAll('.home-card'));
+
+  // ปุ่มย้อนกลับ → กลับไปโฟกัสเมนู Home บนสุด
   if (e.key === 'Escape' || e.key === 'GoBack') {
     e.preventDefault();
-    menuItems[0].focus();
+    sbItems[0]?.focus();
+    return;
+  }
+
+  // ----- ช่องค้นหาหน้าแรก -----
+  if (focused === homeSearchBox) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); sbItems[0]?.focus(); }
+    return;
+  }
+
+  // ----- เมนูซ้าย (หมวดหมู่ / Home) -----
+  if (sbItems.includes(focused)) {
+    const idx = sbItems.indexOf(focused);
+    if (e.key === 'ArrowDown') { e.preventDefault(); sbItems[idx + 1]?.focus(); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); if (idx > 0) sbItems[idx - 1].focus(); else homeSearchBox?.focus(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); (quick[0] || gridCards[0])?.focus(); }
+    return;
+  }
+
+  // ----- การ์ดลัด Movies / Series -----
+  if (quick.includes(focused)) {
+    const idx = quick.indexOf(focused);
+    if (e.key === 'ArrowRight') { e.preventDefault(); quick[idx + 1]?.focus(); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); if (idx > 0) quick[idx - 1].focus(); else sbItems[0]?.focus(); }
+    if (e.key === 'ArrowDown')  { e.preventDefault(); gridCards[0]?.focus(); }
+    if (e.key === 'ArrowUp')    { e.preventDefault(); sbItems[0]?.focus(); }
+    return;
+  }
+
+  // ----- กริดหมวดหมู่ทั้งหมด -----
+  if (gridCards.includes(focused)) {
+    const idx = gridCards.indexOf(focused);
+    const gridEl = document.getElementById('homeGrid');
+    const cols = Math.round(gridEl.offsetWidth / (gridCards[0]?.offsetWidth + 16)) || 4;
+    if (e.key === 'ArrowRight') { e.preventDefault(); gridCards[idx + 1]?.focus(); }
+    if (e.key === 'ArrowLeft')  {
+      e.preventDefault();
+      if (idx % cols === 0) sbItems[0]?.focus();
+      else gridCards[idx - 1]?.focus();
+    }
+    if (e.key === 'ArrowDown')  { e.preventDefault(); gridCards[idx + cols]?.focus(); }
+    if (e.key === 'ArrowUp')    {
+      e.preventDefault();
+      if (idx < cols) (quick[0] || sbItems[0])?.focus();
+      else gridCards[idx - cols]?.focus();
+    }
+    return;
+  }
+});
+
+// ========== REMOTE / KEYBOARD NAV IN GRID (หน้า 2 - หน้าเล่นช่อง) ==========
+document.addEventListener('keydown', e => {
+  if (!playerView.classList.contains('active')) return; // ทำงานเฉพาะตอนอยู่หน้าเล่นช่อง (หน้า 2)
+
+  const focused = document.activeElement;
+
+  // Back button → go to sidebar (หรือกลับหน้าแรกถ้าอยู่ที่เมนูแรกอยู่แล้ว)
+  if (e.key === 'Escape' || e.key === 'GoBack') {
+    e.preventDefault();
+    if (document.activeElement === menuItems[0] || focused.classList.contains('menu-item')) {
+      showHome();
+    } else {
+      menuItems[0].focus();
+    }
     return;
   }
 
@@ -819,95 +1400,20 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowDown')  { e.preventDefault(); cards[idx+cols]?.focus(); }
   if (e.key === 'ArrowUp')    {
     e.preventDefault();
-    if (idx < cols) { /* already top row, jump to search */ searchBox.focus(); }
+    if (idx < cols) {
+      // แถวบนสุดแล้ว → กลับไปที่เมนูซ้าย (หมวดหมู่ที่กำลังเลือกอยู่)
+      const activeItem = Array.from(menuItems).find(m => m.classList.contains('active'));
+      (activeItem || menuItems[0])?.focus();
+    }
     else cards[idx-cols]?.focus();
   }
 });
 
 // ========== INIT ==========
 setCategory("ภาพยนต์");
+showHome();
 
-/* ==========================
-   ข้อมูลต้นฉบับ
-========================== */
-const PORTAL_URL = "https://iptvandroidtv.iveenvon.workers.dev/";
-const MAC_ADDRESS = "00:11:22:33:44:55";
 
-/* ==========================
-   Base64
-========================== */
-const URL_BASE64 = "YUhSMGNEb3ZMMmx0WVc1d2IzTjBMbWRwZEdoMVlpNXBieTlwY0hSMmJtVjMv";
-const MAC_BASE64 = "MDA6MTE6MjI6MzM6NDQ6NTU=";
-
-/* ==========================
-   ถอดรหัส
-========================== */
-const CONFIG = {
-    p: atob(URL_BASE64),
-    m: atob(MAC_BASE64)
-};
-
-/* ==========================
-   ปิดคลิกขวา
-========================== */
-document.addEventListener("contextmenu", function(e){
-    e.preventDefault();
-    return false;
-});
-
-/* ==========================
-   ปิด F12 / DevTools Shortcut
-========================== */
-document.addEventListener("keydown", function(e){
-    if (
-        e.key === "F12" ||
-        (e.ctrlKey && e.shiftKey &&
-            ["I","J","C"].includes(e.key.toUpperCase())
-        ) ||
-        (e.ctrlKey && e.key.toUpperCase() === "U")
-    ){
-        e.preventDefault();
-        return false;
-    }
-});
-
-/* ==========================
-   ปิดลากรูป
-========================== */
-document.addEventListener("dragstart", function(e){
-    e.preventDefault();
-});
-
-/* ==========================
-   ปิดเลือกข้อความ
-========================== */
-document.addEventListener("selectstart", function(e){
-    e.preventDefault();
-});
-
-/* ==========================
-   ตรวจ DevTools
-========================== */
-setInterval(function(){
-    const widthThreshold =
-        window.outerWidth - window.innerWidth > 160;
-    const heightThreshold =
-        window.outerHeight - window.innerHeight > 160;
-    if(widthThreshold || heightThreshold){
-        document.body.innerHTML = `
-        <div style="
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
-            font-size:24px;
-            font-family:sans-serif;
-            background:#0d0d0d;
-            color:#ff4444;">
-            🔒 Access Denied
-        </div>`;
-    }
-}, 1000);
 </script>
 </body>
 </html>
