@@ -1154,6 +1154,11 @@ topbarHome.addEventListener('focus', () => {
 function showPlayerView() {
   homeScreen.classList.add('hidden');
   playerView.classList.add('active');
+  // โฟกัสเมนูหมวดที่กำลังเลือกอยู่ทันที เพื่อให้กรอบฟ้าขึ้น และปุ่มลูกศร/ขวาบนรีโมท
+  // ใช้งานต่อได้เลย (ถ้าไม่ทำแบบนี้ โฟกัสจะหลุดไปที่ <body> เพราะการ์ดหน้าแรกที่เพิ่งกดถูกซ่อนไป
+  // ทำให้กด "ขวา" เพื่อเลือกช่องไม่ได้เลย)
+  const activeItem = Array.from(menuItems).find(m => m.classList.contains('active'));
+  (activeItem || menuItems[0])?.focus();
 }
 
 function showHome() {
