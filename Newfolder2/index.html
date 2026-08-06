@@ -682,7 +682,7 @@ HOME SCREEN - หน้าแรก (สไตล์ Sidebar อ้างอิ�
       <button class="hs-item" type="button" data-cat="ภาพยนต์"><span class="icon">🍿</span>ภาพยนต์</button>
       <button class="hs-item" type="button" data-cat="การ์ตูน"><span class="icon">🎨</span>การ์ตูน</button>
       <button class="hs-item" type="button" data-cat="กีฬาต่างประเทศ"><span class="icon">🏆</span>กีฬาต่างประเทศ</button>
-      <button class="hs-item" type="button" data-cat="บอลโลก"><span class="icon">⚽</span>บอลโลก</button>
+      <button class="hs-item" type="button" data-cat="พรีเมียร์ลีก"><span class="icon">⚽</span>พรีเมียร์ลีก</button>
       <button class="hs-item" type="button" data-cat="สารคดี"><span class="icon">🔭</span>สารคดี</button>
       <button class="hs-item" type="button" data-cat="NEWS"><span class="icon">📰</span>NEWS</button>
       <button class="hs-item" type="button" data-cat="ตารางแข่งขัน"><span class="icon">🧩</span>ตารางแข่งขัน</button>
@@ -741,9 +741,9 @@ HOME SCREEN - หน้าแรก (สไตล์ Sidebar อ้างอิ�
         <div class="home-card__body"><span class="home-card__icon">🌐</span></div>
         <span class="home-card__label">กีฬาต่างประเทศ</span>
       </div>
-      <div class="home-card home-card--c9" data-cat="บอลโลก" tabindex="0">
+      <div class="home-card home-card--c9" data-cat="พรีเมียร์ลีก" tabindex="0">
         <div class="home-card__body"><span class="home-card__icon">⚽</span></div>
-        <span class="home-card__label">บอลโลก</span>
+        <span class="home-card__label">พรีเมียร์ลีก</span>
       </div>
       <div class="home-card home-card--c8" data-cat="การ์ตูน" tabindex="0">
         <div class="home-card__body"><span class="home-card__icon">🎨</span></div>
@@ -808,8 +808,8 @@ PLAYER VIEW - หน้าเล่นช่อง (ซ่อนไว้ก่�
     <div class="menu-item" data-cat="ดูหนังใหม่" tabindex="0">
       <span class="icon">⏪</span> ดูหนังใหม่
     </div>
-    <div class="menu-item" data-cat="บอลโลก" tabindex="0">
-      <span class="icon">⚽︎</span> บอลโลก
+    <div class="menu-item" data-cat="พรีเมียร์ลีก" tabindex="0">
+      <span class="icon">⚽︎</span> พรีเมียร์ลีก
     </div>
     <div class="menu-item" data-cat="ตารางแข่งขัน" tabindex="0">
       <span class="icon">🧩</span> ตารางแข่งขัน
@@ -932,13 +932,11 @@ const categories = {
     { name:"Sport TV 1",     src:"./New folder/spotv1.png",                                                                                  url:"go:ZZ" },
     { name:"Sport TV 2",     src:"./New folder/spotv2.png",                                                                                     url:"go:ZX" },
     { name:"Ball HD",        src:"./New folder/cup-2026.jpg",                                                                             url:"go:XX" },
-    { name:"AstroFull",        src:"https://static02.astro.com.my/astro/media/astromain/packagepromotion/astro_share_1.png",                                                                             url:"go:ASS" },
-      { name:"AstroPre1",        src:"https://static02.astro.com.my/astro/media/astromain/packagepromotion/astro_share_1.png",                                                                             url:"go:ASS2" },
-      { name:"AstroPre2",        src:"https://static02.astro.com.my/astro/media/astromain/packagepromotion/astro_share_1.png",                                                                             url:"go:ASS3" },
+   
     { name:"มวยปล่ำ",        src:"https://upload.wikimedia.org/wikipedia/commons/0/02/TNA_Impact%21_2024.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",                                                                             url:"go:TNA" },
     { name:"Golf Channel",   src:"./New folder/golfchannel.png",                                                                                url:"go:J"  },
     { name:"HD Golf 2",      src:"https://api.eatmorebanana.org/images/png/hd-golf2.png",                                                                                  url:"go:V"  },
-        { name:"As Golf ",      src:"https://variety.com/wp-content/uploads/2018/10/golftv-pga-tour.jpg",                                                                                  url:"go:ASTROG"  },
+     { name:"As Golf ",      src:"https://variety.com/wp-content/uploads/2018/10/golftv-pga-tour.jpg",                                                                                  url:"go:ASTROG"  },
    { name:"F1 Sky",      src:"https://a.jsrdn.com/hls/22626/drive-plus-speed/thumbh_20260324_012750_270.png",                                                                                  url:"go:F1DS"  },
      { name:"NBAบาส",      src:"https://static.vecteezy.com/system/resources/thumbnails/015/863/585/small_2x/nba-logo-on-transparent-background-free-vector.jpg",                                                                                  url:"go:NBA1"  },
     { name:"Redbull",      src:"https://s10019.cdn.ncms.io/wp-content/uploads/2025/11/Redbull-TV.jpg.jpeg",                                                                                  url:"go:Redbull"  },
@@ -1071,26 +1069,25 @@ const categories = {
   "ดูหนังใหม่": [
             { name:"ดูหนังใหม่",    src:"https://cdn.ananda.co.th/blog/thegenc/wp-content/uploads/2024/04/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-63.png",                                                                             url:"go:KYT"  },
   ],
-  "บอลโลก": [
-      { name:"Caze_TV",   src:"https://f.ptcdn.info/428/087/000/m8g5ap59jmMLfEaSYzj-o.jpg",                                                                                               url:"go:F1" },
-      { name:"Ball HD",        src:"./New folder/cup-2026.jpg",                                                                             url:"go:XX" },              
-     { name:"CT SportHD",    src:"https://logowik.com/content/uploads/images/ct-sport-hd6421.logowik.com.webp",                                                            url:"go:E"  },
-      { name:"CTSport 25p",    src:"https://logowik.com/content/uploads/images/ct-sport-hd6421.logowik.com.webp",                                                      url:"go:CTSPORT25"  },
-    { name:"FIFA+",    src:"https://dazngroup.com/wp-content/uploads/2025/10/Attachment-1-3.webp",                                                                                     url:"go:FIFA"  },
-       { name:"Bein RU",    src:"https://f.ptcdn.info/428/087/000/m8g5ap59jmMLfEaSYzj-o.jpg",                                                                             url:"go:BES"  },
+  "พรีเมียร์ลีก": [
+     { name:"Ball HD",        src:"https://f.ptcdn.info/955/039/000/o2a2ig3o3f1vQM1M2x8-o.jpg",                                            url:"go:XX" },      
+     { name:"MONOMAX",    src:"./New folder/monomax-sport-tv.png",                                                                           url:"go:MONOO"  },
+   
 
-        { name:"FS1",    src:"https://rcrusadernews.com/wp-content/uploads/2022/06/World-Cup.png",                                                                             url:"go:FS1"  },
-        { name:"FOX1",    src:"https://rcrusadernews.com/wp-content/uploads/2022/06/World-Cup.png",                                                                             url:"go:FOX"  },
-        { name:"TSN",    src:"https://i.imgur.com/eRFE0jZ.png",                                                                                                              url:"go:TSNW"  },
-        { name:"TSN4k",    src:"https://i.imgur.com/eRFE0jZ.png",                                                                                                              url:"go:TSN4k"  },
-        { name:"Unite8HD",    src:"https://st1.latestly.com/wp-content/uploads/2026/06/unite8-fifa.jpg",                                                                             url:"go:Unite8"  },
-        { name:"MONOMAX",    src:"./New folder/monomax-sport-tv.png",                                                                             url:"go:MONOO"  },
-        { name:"Dazn1",    src:"https://f.ptcdn.info/909/090/000/mnflwx0co3kNQynawl0-o.jpg",                                                                             url:"go:Danza1"  },
-  { name:"World Cup",    src:"./New folder/cup-2026.jpg",                                                                             url:"go:joj"  },
-  { name:"World Cup",    src:"./New folder/cup-2026.jpg",                                                                             url:"go:WORLD"  },
 
-  { name:"World Cup",    src:"./New folder/cup-2026.jpg",                                                                             url:"go:FoX01"  },
- { name:"World Cup",    src:"./New folder/cup-2026.jpg",                                                                             url:"go:SPORTTV"  },
+    
+     { name:"hubPremier1",    src:"https://poster.starhubgo.com/Linear_Channels2/221_1920x1080_HTV.png",          url:"go:hubPree1"  },
+       { name:"hubPremier2",    src:"https://poster.starhubgo.com/Linear_Channels2/222_1920x1080_HTV.png",          url:"go:hubPree2"  },
+     { name:"TSN",    src:"https://cdn.prod.website-files.com/5d655866b2055c7cbb5d79a1/5d7a6396e5f68d18117c7c14_tsnarticle88_1.jpg",          url:"go:TSNW"  },
+    { name:"Caze_TV",   src:"https://f.ptcdn.info/428/087/000/m8g5ap59jmMLfEaSYzj-o.jpg",                                                     url:"go:F1" },
+    { name:"FIFA+",    src:"https://dazngroup.com/wp-content/uploads/2025/10/Attachment-1-3.webp",                                            url:"go:FIFA"  },
+    { name:"Unite8HD",    src:"https://st1.latestly.com/wp-content/uploads/2026/06/unite8-fifa.jpg",                                          url:"go:Unite8"  },
+      { name:"CT SportHD",    src:"https://logowik.com/content/uploads/images/ct-sport-hd6421.logowik.com.webp",                              url:"go:E"  },
+      { name:"CTSport 25p",    src:"https://logowik.com/content/uploads/images/ct-sport-hd6421.logowik.com.webp",                             url:"go:CTSPORT25"  },
+   
+ 
+
+
 
     
   ],
