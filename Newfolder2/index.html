@@ -685,7 +685,7 @@ HOME SCREEN - หน้าแรก (สไตล์ Sidebar อ้างอิ�
       <button class="hs-item" type="button" data-cat="พรีเมียร์ลีก"><span class="icon">⚽</span>พรีเมียร์ลีก</button>
       <button class="hs-item" type="button" data-cat="สารคดี"><span class="icon">🔭</span>สารคดี</button>
       <button class="hs-item" type="button" data-cat="NEWS"><span class="icon">📰</span>NEWS</button>
-      <button class="hs-item" type="button" data-cat="ตารางแข่งขัน"><span class="icon">🧩</span>ตารางแข่งขัน</button>
+      <button class="hs-item" type="button" data-cat="ถ่ายทอดสด"><span class="icon">🔴</span>ถ่ายทอดสด</button>
       <button class="hs-item" type="button" data-cat="เกี่ยวกับ"><span class="icon">📢</span>เกี่ยวกับเรา</button>
     </div>
   </nav>
@@ -757,9 +757,9 @@ HOME SCREEN - หน้าแรก (สไตล์ Sidebar อ้างอิ�
         <div class="home-card__body"><span class="home-card__icon">📰</span></div>
         <span class="home-card__label">NEWS</span>
       </div>
-      <div class="home-card home-card--c10" data-cat="ตารางแข่งขัน" tabindex="0">
-        <div class="home-card__body"><span class="home-card__icon">🧩</span></div>
-        <span class="home-card__label">ตารางแข่งขัน</span>
+      <div class="home-card home-card--c10" data-cat="ถ่ายทอดสด" tabindex="0">
+        <div class="home-card__body"><span class="home-card__icon">🔴</span></div>
+        <span class="home-card__label">ถ่ายทอดสด</span>
       </div>
       <div class="home-card home-card--c11" data-cat="เกี่ยวกับ" tabindex="0">
         <div class="home-card__body"><span class="home-card__icon">📢</span></div>
@@ -779,7 +779,7 @@ PLAYER VIEW - หน้าเล่นช่อง (ซ่อนไว้ก่�
   <nav id="sidebar" role="navigation" aria-label="หมวดหมู่">
     <div id="sidebar-header">
       <div class="logo">⃢📺PLAYBOX</div>
-      <div class="sub">Thailand Beta.By NETI</div>
+      <div class="sub">Thailand FREE.By NETI</div>
     </div>
     <div class="menu-item" data-home-action="home" tabindex="0">
       <span class="icon">🏠</span> กลับหน้าแรก
@@ -811,8 +811,8 @@ PLAYER VIEW - หน้าเล่นช่อง (ซ่อนไว้ก่�
     <div class="menu-item" data-cat="พรีเมียร์ลีก" tabindex="0">
       <span class="icon">⚽︎</span> พรีเมียร์ลีก
     </div>
-    <div class="menu-item" data-cat="ตารางแข่งขัน" tabindex="0">
-      <span class="icon">🧩</span> ตารางแข่งขัน
+    <div class="menu-item" data-cat="ถ่ายทอดสด" tabindex="0">
+      <span class="icon">🔴</span> ถ่ายทอดสด
     </div>
         <div class="menu-item" data-cat="WisePlay" tabindex="0">
       <span class="icon">📛</span> WisePlay
@@ -1102,8 +1102,20 @@ const categories = {
 
     
   ],
-  "ตารางแข่งขัน": [
+  "ถ่ายทอดสด": [
  { name:"ตารางแข่งขัน",    src:"https://image-sapp-prod.bugaboo.tv/eyJidWNrZXQiOiJzdXBlcmFwcC1wcm9kLWltYWdlIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjoxMDAwLCJoZWlnaHQiOjEwMDAsImZpdCI6Imluc2lkZSJ9fSwia2V5IjoiaW1hZ2VzLzIwMjYvNi85L2ltZ18xNzgxMDEzMzc3Mzg4X3J2emRrdnZ1MC5wbmcifQ==",                                                                             url:"go:goal"  },
+    
+   { name:"Max01 Mutv",    src:"https://i.postimg.cc/3RH25Z8v/Gemini-Generated-Image-f5aqe2f5aqe2f5aq.png",                                                                             url:"go:Maxmutv"  },
+     { name:"Max01 Mutv",    src:"https://i.postimg.cc/3RH25Z8v/Gemini-Generated-Image-f5aqe2f5aqe2f5aq.png",                                                                             url:"go:resteam13"  },
+       { name:"maxsport1",    src:"https://i.postimg.cc/3RH25Z8v/Gemini-Generated-Image-f5aqe2f5aqe2f5aq.png",                                                                             url:"go:maxsport1"  },
+    { name:"sttv1",    src:"https://i.postimg.cc/3RH25Z8v/Gemini-Generated-Image-f5aqe2f5aqe2f5aq.png",                                                                             url:"go:sttv1"  },
+ { name:"espn1nl",    src:"https://i.postimg.cc/3RH25Z8v/Gemini-Generated-Image-f5aqe2f5aqe2f5aq.png",                                                                             url:"go:espn1nl"  },
+ { name:"espn1nl",    src:"https://i.postimg.cc/3RH25Z8v/Gemini-Generated-Image-f5aqe2f5aqe2f5aq.png",                                                                             url:"go:be1th"  },
+ { name:"maxsport3",    src:"https://i.postimg.cc/3RH25Z8v/Gemini-Generated-Image-f5aqe2f5aqe2f5aq.png",                                                                             url:"go:maxsport3"  },
+  { name:"digisport1",    src:"https://i.postimg.cc/3RH25Z8v/Gemini-Generated-Image-f5aqe2f5aqe2f5aq.png",                                                                             url:"go:digisport1"  },
+   { name:"digisport2",    src:"https://i.postimg.cc/3RH25Z8v/Gemini-Generated-Image-f5aqe2f5aqe2f5aq.png",                                                                             url:"go:digisport2"  },  
+    
+  
   ],
     "WisePlay": [
  
